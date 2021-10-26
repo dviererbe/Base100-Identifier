@@ -49,5 +49,13 @@ namespace Base100Identifier.UnitTests
             byte valueCopy = value; //needed because lambda-expressions can't contain in-Parameters
             Assert.Throws<ArgumentOutOfRangeException>(() => new Base100Digit(valueCopy));
         }
+
+        [Theory]
+        [MemberData(nameof(ValidBase100DigitValues))]
+        public void GetHashCode_ShouldReturn_InitilizationValue(in byte value)
+        {
+            Base100Digit digit = new Base100Digit(value);
+            Assert.Equal(expected: value, actual: digit.GetHashCode());
+        }
     }
 }

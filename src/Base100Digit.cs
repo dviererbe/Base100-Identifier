@@ -49,5 +49,13 @@ namespace Base100Identifier
         {
             throw new ArgumentOutOfRangeException(nameof(value), value, "The value for an base100 digit has to be between 0 and 99.");
         }
+
+        /// <summary>
+        /// Returns the hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for the current <see cref="Base100Digit"/>.
+        /// </returns>
+        public override int GetHashCode() => Value;
     }
 }
