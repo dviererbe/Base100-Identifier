@@ -7,7 +7,7 @@
         <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
         <Description>A free and Open Source .NET library for creating/using Base100 Identifiers.</Description>
         <PackageTags>Base100;Identifier</PackageTags>
-        <RepositoryUrl></RepositoryUrl>
+        <RepositoryUrl>https://github.com/dviererbe/Base100-Identifier</RepositoryUrl>
         <RespositoryType>git</RespositoryType>
         
         <TargetFramework>net5.0</TargetFramework>
