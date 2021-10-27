@@ -69,6 +69,7 @@ namespace Base100Identifier
         /// <returns>
         /// A hash code for the current <see cref="Base100Digit"/>.
         /// </returns>
+        /// <seealso cref="Object.GetHashCode"/>
         public override int GetHashCode() => Value;
 
         /// <summary>
