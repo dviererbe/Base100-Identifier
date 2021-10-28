@@ -204,7 +204,7 @@ namespace Base100Identifier
 
         /// <summary>
         /// Converts the numeric value of the current <see cref="Base100Digit"/> object to its equivalent 
-        // string representation using the specified culture-specific formatting information.
+        /// string representation using the specified culture-specific formatting information.
         /// </summary>
         /// <param name="formatProvider">
         /// An object that supplies culture-specific formatting information.
