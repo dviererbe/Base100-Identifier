@@ -7,7 +7,7 @@ namespace Base100Identifier
     /// <summary>
     /// Represents an base100 digit (0-99).
     /// </summary>
-    public readonly struct Base100Digit : IFormattable
+    public readonly struct Base100Digit : IEquatable<Base100Digit>, IEquatable<Base100Digit?>, IFormattable
     {
         private const byte MinByteValue = 0;
         
@@ -72,6 +72,8 @@ namespace Base100Identifier
         /// <seealso cref="Object.GetHashCode"/>
         public override int GetHashCode() => Value;
 
+        #region ToString() && IFormattable Implementation
+        
         /// <summary>
         /// Converts the value of the current <see cref="Base100Digit"/> object to its 
         /// equivalent string representation.
@@ -364,5 +366,33 @@ namespace Base100Identifier
 
         private static IFormatProvider DefaultFormatProviderIfNull(IFormatProvider? formatProvider) =>
             formatProvider ?? DefaultFormatProvider;
+        
+        #endregion
+
+        #region Equality Comparison Implementation
+
+        public override bool Equals(object? obj) => obj is Base100Digit digit && Equals(digit);
+        
+        public bool Equals(Base100Digit? other) => other.HasValue && Equals(other.Value);
+        
+        public bool Equals(Base100Digit other) => other.Value == Value;
+        
+        public static bool operator ==(Base100Digit left, Base100Digit right) => left.Value == right.Value;
+        
+        public static bool operator !=(Base100Digit left, Base100Digit right) => left.Value != right.Value;
+
+        public static bool operator ==(Base100Digit? left, Base100Digit? right)
+        {
+            if (left.HasValue) return left.Value.Equals(right);
+            else return !right.HasValue;
+        }
+
+        public static bool operator !=(Base100Digit? left, Base100Digit? right)
+        {
+            if (left.HasValue) return !left.Value.Equals(right);
+            else return right.HasValue;
+        }
+
+        #endregion
     }
 }

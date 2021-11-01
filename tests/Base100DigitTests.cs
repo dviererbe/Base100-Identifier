@@ -11,27 +11,32 @@ namespace Base100Identifier.UnitTests
     {
         #region Test Data
 
+        // ReSharper disable once InconsistentNaming
         private static CultureInfo CultureInfo_en_US => new CultureInfo("en-US");
+        
+        // ReSharper disable once InconsistentNaming
         private static CultureInfo CultureInfo_de_DE => new CultureInfo("de-DE");
+        
+        // ReSharper disable once InconsistentNaming
         private static CultureInfo CultureInfo_fr_FR => new CultureInfo("fr-FR");
+        
+        // ReSharper disable once InconsistentNaming
         private static CultureInfo CultureInfo_es_ES => new CultureInfo("es-ES");
 
-        private static object[] AsObjectArray<TSource>(TSource value) => new object[] { value };
-        private static byte FirstItemAsByte(object[] array) => (byte)array[0];
+        private static object?[] AsObjectArray<TSource>(TSource value) => new object?[] { value };
+        private static byte FirstItemAsByte(object?[] array) => (byte)array[0]!;
 
         //I am aware of the existence of for loops ;) The explicit declaration is intended.
-        public static IEnumerable<object[]> AllValidBase100DigitByteValues =>
-            new byte[]
+        public static IEnumerable<object?[]> AllValidBase100DigitByteValues => new byte[]
                 {
-                    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26,
-                    27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51,
-                    52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76,
-                    77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99
-                }
-                .Select(AsObjectArray);
+                     0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 
+                    25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 
+                    50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 
+                    75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99
+                }.Select(AsObjectArray);
 
         //I am aware of the existence of for loops ;) The explicit declaration is intended.
-        public static IEnumerable<object[]> AllInvalidBase100DigitByteValues =>
+        public static IEnumerable<object?[]> AllInvalidBase100DigitByteValues =>
             new byte[]
                 {
                     100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119,
@@ -44,12 +49,31 @@ namespace Base100Identifier.UnitTests
                     240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255
                 }
                 .Select(AsObjectArray);
-
-        public static IEnumerable<object[]> AllBase100DigitValues =>
+        
+        public static IEnumerable<object?[]> AllBase100DigitValues =>
             AllValidBase100DigitByteValues
-                .Select(FirstItemAsByte)
-                .Select(value => new Base100Digit(value))
-                .Select(AsObjectArray);
+            .Select(FirstItemAsByte)
+            .Select(value => new Base100Digit(value))
+            .Select(AsObjectArray);
+        
+        public static IEnumerable<object?[]> AllNonEqualBase100DigitValuePairs
+        {
+            get 
+            {
+                for (int number1 = Base100Digit.MinValue.Value; number1 <= Base100Digit.MaxValue.Value; ++number1)
+                {
+                    for (int number2 = Base100Digit.MinValue.Value; number2 <= Base100Digit.MaxValue.Value; ++number2)
+                    {
+                        if (number1 != number2)
+                        {
+                            yield return new object[] { new Base100Digit((byte)number1), new Base100Digit((byte)number2) };
+                        }
+                    }
+                }
+            }
+        }
+        
+        
 
         public static IEnumerable<object[]> Base100DigitToStringRepresentationsUsingCultureInfo => new []
         {
@@ -581,7 +605,7 @@ namespace Base100Identifier.UnitTests
             Assert.Equal(expected: value, actualValue);
         }
 
-        [Theory(DisplayName = "Constructor SHOULD throw an ArgumentOutOfRangeException when initialization value is larger than 99")]
+        [Theory(DisplayName = "Constructor SHOULD throw an ArgumentOutOfRangeException WHEN initialization value is larger than 99")]
         [MemberData(nameof(AllInvalidBase100DigitByteValues))]
         public void Constructor_Should_ThrowArgumentOutOfRangeException_When_ValueIsLargerThan99(byte value)
         {
@@ -750,6 +774,160 @@ namespace Base100Identifier.UnitTests
             Assert.Throws<FormatException>(TestCode);
         }
         
+        #endregion
+
+        #region Equality Comparison Tests
+
+        [Theory]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void Equals_SHOULD_ReturnTrue_WHEN_ComparedToItself(Base100Digit digit)
+        {
+            //Arrange: (nothing to do here)
+
+            //Act:
+            bool result = digit.Equals(digit);
+            
+            //Assert:
+            Assert.True(result);
+        }
+        
+        [Theory(DisplayName = "Equals(Base100Digit?) SHOULD return true WHEN compared to itself")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void Equals_SHOULD_ReturnTrue_WHEN_ComparedToItselfAsNullable(Base100Digit digit)
+        {
+            //Arrange:
+            Base100Digit? boxedDigit = digit;
+
+            //Act:
+            bool result = digit.Equals(boxedDigit);
+            
+            //Assert:
+            Assert.True(result);
+        }
+        
+        [Theory(DisplayName = "Equals(object?) SHOULD return true WHEN compared to itself")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void Equals_SHOULD_ReturnTrue_WHEN_ComparedToItselfAsBoxedObject(Base100Digit digit)
+        {
+            //Arrange:
+            object? boxedDigit = digit;
+
+            //Act:
+            bool result = digit.Equals(boxedDigit);
+            
+            //Assert:
+            Assert.True(result);
+        }
+        
+        [Theory(DisplayName = "Equals(Base100Digit) SHOULD return false WHEN compared to other instance with same value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void Equals_SHOULD_ReturnTrue_WHEN_ComparedToOtherInstanceWithSameValue(Base100Digit digit)
+        {
+            //Arrange:
+            Base100Digit copy = new Base100Digit(digit.Value);
+
+            //Act:
+            bool result = digit.Equals(copy);
+            
+            //Assert:
+            Assert.True(result);
+        }
+        
+        [Theory(DisplayName = "Equals(Base100Digit?) SHOULD return false WHEN compared to other instance with same value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void Equals_SHOULD_ReturnTrue_WHEN_ComparedToOtherInstanceAsNullableWithSameValue(Base100Digit digit)
+        {
+            //Arrange:
+            Base100Digit? copy = new Base100Digit(digit.Value);
+
+            //Act:
+            bool result = digit.Equals(copy);
+            
+            //Assert:
+            Assert.True(result);
+        }
+        
+        [Theory(DisplayName = "Equals(object?) SHOULD return false WHEN compared to other instance with same value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void Equals_SHOULD_ReturnTrue_WHEN_ComparedToOtherInstanceAsNullableObjectWithSameValue(Base100Digit digit)
+        {
+            //Arrange:
+            object? copy = new Base100Digit(digit.Value);
+
+            //Act:
+            bool result = digit.Equals(copy);
+            
+            //Assert:
+            Assert.True(result);
+        }
+        
+        [Theory(DisplayName = "Equals(Base100Digit?) SHOULD return false WHEN compared to null")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void Equals_SHOULD_ReturnFalse_WHEN_ComparedToNullAsNullable(Base100Digit digit)
+        {
+            //Arrange:
+            Base100Digit? @null = null;
+
+            //Act:
+            bool result = digit.Equals(@null);
+            
+            //Assert:
+            Assert.False(result);
+        }
+        
+        [Theory(DisplayName = "Equals(object?) SHOULD return false WHEN compared to null")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void Equals_SHOULD_ReturnFalse_WHEN_ComparedToNullAsNullableObject(Base100Digit digit)
+        {
+            //Arrange: 
+            object? @null = null;
+
+            //Act:
+            bool result = digit.Equals(@null);
+            
+            //Assert:
+            Assert.False(result);
+        }
+        
+        [Theory(DisplayName = "Equals(Base100Digit) SHOULD return false WHEN compared to an Base100Digit with different Value")]
+        [MemberData(nameof(AllNonEqualBase100DigitValuePairs))]
+        public void Equals_SHOULD_ReturnFalse_WHEN_ComparedToDigitWithDifferentValue(Base100Digit digit1, Base100Digit digit2)
+        {
+            //Arrange: (nothing to do here)
+
+            //Act:
+            bool result = digit1.Equals(digit2);
+            
+            //Assert:
+            Assert.False(result);
+        }
+        
+        [Theory(DisplayName = "Equals(Base100Digit?) SHOULD return false WHEN compared to an Base100Digit with different Value")]
+        [MemberData(nameof(AllNonEqualBase100DigitValuePairs))]
+        public void Equals_SHOULD_ReturnFalse_WHEN_ComparedToDigitWithDifferentValueAsNullable(Base100Digit digit1, Base100Digit? digit2)
+        {
+            //Arrange: (nothing to do here)
+
+            //Act:
+            bool result = digit1.Equals(digit2);
+            
+            //Assert:
+            Assert.False(result);
+        }
+        
+        [Theory(DisplayName = "Equals(object?) SHOULD return false WHEN compared to an Base100Digit with different Value")]
+        [MemberData(nameof(AllNonEqualBase100DigitValuePairs))]
+        public void Equals_SHOULD_ReturnFalse_WHEN_ComparedToDigitWithDifferentValueAsNullableObject(Base100Digit digit1, object? digit2)
+        {
+            //Arrange: (nothing to do here)
+
+            //Act:
+            bool result = digit1.Equals(digit2);
+            
+            //Assert:
+            Assert.False(result);
+        }
+
         #endregion
     }
 }
