@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using Xunit;
 using System.Globalization;
 using System.Threading;
@@ -55,25 +56,6 @@ namespace Base100Identifier.UnitTests
             .Select(FirstItemAsByte)
             .Select(value => new Base100Digit(value))
             .Select(AsObjectArray);
-        
-        public static IEnumerable<object?[]> AllNonEqualBase100DigitValuePairs
-        {
-            get 
-            {
-                for (int number1 = Base100Digit.MinValue.Value; number1 <= Base100Digit.MaxValue.Value; ++number1)
-                {
-                    for (int number2 = Base100Digit.MinValue.Value; number2 <= Base100Digit.MaxValue.Value; ++number2)
-                    {
-                        if (number1 != number2)
-                        {
-                            yield return new object[] { new Base100Digit((byte)number1), new Base100Digit((byte)number2) };
-                        }
-                    }
-                }
-            }
-        }
-        
-        
 
         public static IEnumerable<object[]> Base100DigitToStringRepresentationsUsingCultureInfo => new []
         {
@@ -888,44 +870,56 @@ namespace Base100Identifier.UnitTests
             //Assert:
             Assert.False(result);
         }
-        
-        [Theory(DisplayName = "Equals(Base100Digit) SHOULD return false WHEN compared to an Base100Digit with different Value")]
-        [MemberData(nameof(AllNonEqualBase100DigitValuePairs))]
-        public void Equals_SHOULD_ReturnFalse_WHEN_ComparedToDigitWithDifferentValue(Base100Digit digit1, Base100Digit digit2)
-        {
-            //Arrange: (nothing to do here)
 
-            //Act:
-            bool result = digit1.Equals(digit2);
-            
-            //Assert:
-            Assert.False(result);
-        }
-        
-        [Theory(DisplayName = "Equals(Base100Digit?) SHOULD return false WHEN compared to an Base100Digit with different Value")]
-        [MemberData(nameof(AllNonEqualBase100DigitValuePairs))]
-        public void Equals_SHOULD_ReturnFalse_WHEN_ComparedToDigitWithDifferentValueAsNullable(Base100Digit digit1, Base100Digit? digit2)
+        [Fact(DisplayName = "Base100Digit's with different Values SHOULD not be equal WHEN compared with Equality Comparison Functions")]
+        public void Base100DigitsWithDifferentValues_SHOULD_NotBeEqual_WHEN_ComparedWithEqualityComparisonFunctions()
         {
-            //Arrange: (nothing to do here)
-
-            //Act:
-            bool result = digit1.Equals(digit2);
+            // IMPLEMENTATION NOTE:
+            // This Test was originally spaced out as multiple Theory's, but the test runner needed multiple seconds to
+            // run all tests. Although the Arrange, Act, Assert pattern and test isolation is lost; as a Fact the test
+            // runs multiple times faster which is better for a quick feedback loop during Test Driven Development. 
             
-            //Assert:
-            Assert.False(result);
-        }
-        
-        [Theory(DisplayName = "Equals(object?) SHOULD return false WHEN compared to an Base100Digit with different Value")]
-        [MemberData(nameof(AllNonEqualBase100DigitValuePairs))]
-        public void Equals_SHOULD_ReturnFalse_WHEN_ComparedToDigitWithDifferentValueAsNullableObject(Base100Digit digit1, object? digit2)
-        {
-            //Arrange: (nothing to do here)
-
-            //Act:
-            bool result = digit1.Equals(digit2);
+            IEnumerable<(Base100Digit, Base100Digit)> allNonEqualBase100DigitPairs =
+                from firstBase100DigitValue in Enumerable.Range(0, 100)
+                from secondBase100DigitValue in Enumerable.Range(0, 100)
+                where firstBase100DigitValue != secondBase100DigitValue
+                let firstBase100Digit = new Base100Digit((byte)firstBase100DigitValue)
+                let secondBase100Digit = new Base100Digit((byte)secondBase100DigitValue)
+                select (firstBase100Digit, secondBase100Digit);
             
-            //Assert:
-            Assert.False(result);
+            foreach ((Base100Digit firstDigit, Base100Digit secondDigit) in allNonEqualBase100DigitPairs)
+            {
+                Base100Digit? secondDigitAsNullable = secondDigit;
+                object secondDigitAsObject = secondDigit;
+                
+                Assert.False(
+                    condition: firstDigit.Equals(secondDigit), 
+                    userMessage: $"Equals({nameof(Base100Digit)}) failed with {{{firstDigit}, {secondDigit}}}");
+                
+                Assert.False(
+                    condition: firstDigit.Equals(secondDigitAsNullable), 
+                    userMessage: $"Equals({nameof(Base100Digit)}?) failed with {{{firstDigit}, {secondDigit}}}");
+                
+                Assert.False(
+                    condition: firstDigit.Equals(secondDigitAsObject), 
+                    userMessage: $"Equals(object?) failed with {{{firstDigit}, {secondDigit}}}");
+                
+                Assert.False(
+                    condition: firstDigit == secondDigit, 
+                    userMessage: $"operator ==({nameof(Base100Digit)}, {nameof(Base100Digit)}) failed with {{{firstDigit}, {secondDigit}}}");
+                
+                Assert.False(
+                    condition: firstDigit == secondDigitAsNullable, 
+                    userMessage: $"operator ==({nameof(Base100Digit)}?, {nameof(Base100Digit)}?) failed with {{{firstDigit}, {secondDigit}}}");
+                
+                Assert.True(
+                    condition: firstDigit != secondDigit, 
+                    userMessage: $"operator !=({nameof(Base100Digit)}, {nameof(Base100Digit)}) failed with {{{firstDigit}, {secondDigit}}}");
+                
+                Assert.True(
+                    condition: firstDigit != secondDigitAsNullable, 
+                    userMessage: $"operator !=({nameof(Base100Digit)}?, {nameof(Base100Digit)}?) failed with {{{firstDigit}, {secondDigit}}}");
+            }
         }
 
         #endregion
