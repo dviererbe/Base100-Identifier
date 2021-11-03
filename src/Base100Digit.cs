@@ -7,7 +7,7 @@ namespace Base100Identifier
     /// <summary>
     /// Represents an base100 digit (0-99).
     /// </summary>
-    public readonly struct Base100Digit : IEquatable<Base100Digit>, IEquatable<Base100Digit?>, IFormattable
+    public readonly struct Base100Digit : IEquatable<Base100Digit>, IEquatable<Base100Digit?>, IFormattable, IConvertible
     {
         private const byte MinByteValue = 0;
         
@@ -15,6 +15,8 @@ namespace Base100Identifier
 
         private const string DefaultNumericFormat = "D2";
 
+        private const string ExceptionMessage_ConversionNotSupported = "This conversion is not supported.";
+        
         // No constant expression because the CurrentCulture could be changed at runtime.
         private static IFormatProvider DefaultFormatProvider => 
             Thread.CurrentThread.CurrentCulture.NumberFormat;
@@ -46,21 +48,220 @@ namespace Base100Identifier
         /// </exception>
         public Base100Digit(in byte value)
         {
-            ThrowIfValueIsOutOfRange(value);
+            ThrowIfValueIsOutOfRange(in value);
             Value = value;
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Base100Digit"/> structure 
+        /// by using a specified <see cref="System.SByte"/> value.
+        /// </summary>
+        /// <param name="value">
+        /// The value to initialize the <see cref="Base100Digit"/> structure with.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// When <paramref name="value"/> is less than <see cref="Base100Digit.MinValue"/> or larger
+        /// than <see cref="Base100Digit.MaxValue"/>.
+        /// </exception>
+        public Base100Digit(in sbyte value)
+        {
+            ThrowIfValueIsOutOfRange(in value);
+            Value = (byte)value;
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Base100Digit"/> structure 
+        /// by using a specified <see cref="System.Int16"/> value.
+        /// </summary>
+        /// <param name="value">
+        /// The value to initialize the <see cref="Base100Digit"/> structure with.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// When <paramref name="value"/> is less than <see cref="Base100Digit.MinValue"/> or larger
+        /// than <see cref="Base100Digit.MaxValue"/>.
+        /// </exception>
+        public Base100Digit(in short value)
+        {
+            ThrowIfValueIsOutOfRange(in value);
+            Value = (byte)value;
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Base100Digit"/> structure 
+        /// by using a specified <see cref="System.UInt16"/> value.
+        /// </summary>
+        /// <param name="value">
+        /// The value to initialize the <see cref="Base100Digit"/> structure with.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// When <paramref name="value"/> is larger than <see cref="Base100Digit.MaxValue"/>.
+        /// </exception>
+        public Base100Digit(in ushort value)
+        {
+            ThrowIfValueIsOutOfRange(in value);
+            Value = (byte)value;
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Base100Digit"/> structure 
+        /// by using a specified <see cref="System.Int32"/> value.
+        /// </summary>
+        /// <param name="value">
+        /// The value to initialize the <see cref="Base100Digit"/> structure with.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// When <paramref name="value"/> is less than <see cref="Base100Digit.MinValue"/> or larger
+        /// than <see cref="Base100Digit.MaxValue"/>.
+        /// </exception>
+        public Base100Digit(in int value)
+        {
+            ThrowIfValueIsOutOfRange(in value);
+            Value = (byte)value;
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Base100Digit"/> structure 
+        /// by using a specified <see cref="System.UInt32"/> value.
+        /// </summary>
+        /// <param name="value">
+        /// The value to initialize the <see cref="Base100Digit"/> structure with.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// When <paramref name="value"/> is larger than <see cref="Base100Digit.MaxValue"/>.
+        /// </exception>
+        public Base100Digit(in uint value)
+        {
+            ThrowIfValueIsOutOfRange(in value);
+            Value = (byte)value;
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Base100Digit"/> structure 
+        /// by using a specified value.
+        /// </summary>
+        /// <param name="value">
+        /// The value to initialize the <see cref="Base100Digit"/> structure with.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// When <paramref name="value"/> is less than <see cref="Base100Digit.MinValue"/> or larger
+        /// than <see cref="Base100Digit.MaxValue"/>.
+        /// </exception>
+        public Base100Digit(in nint value)
+        {
+            ThrowIfValueIsOutOfRange(in value);
+            Value = (byte)value;
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Base100Digit"/> structure 
+        /// by using a specified value.
+        /// </summary>
+        /// <param name="value">
+        /// The value to initialize the <see cref="Base100Digit"/> structure with.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// When <paramref name="value"/> is larger than <see cref="Base100Digit.MaxValue"/>.
+        /// </exception>
+        public Base100Digit(in nuint value)
+        {
+            ThrowIfValueIsOutOfRange(in value);
+            Value = (byte)value;
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Base100Digit"/> structure 
+        /// by using a specified <see cref="System.Int64"/> value.
+        /// </summary>
+        /// <param name="value">
+        /// The value to initialize the <see cref="Base100Digit"/> structure with.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// When <paramref name="value"/> is less than <see cref="Base100Digit.MinValue"/> or larger
+        /// than <see cref="Base100Digit.MaxValue"/>.
+        /// </exception>
+        public Base100Digit(in long value)
+        {
+            ThrowIfValueIsOutOfRange(in value);
+            Value = (byte)value;
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Base100Digit"/> structure 
+        /// by using a specified <see cref="System.UInt64"/> value.
+        /// </summary>
+        /// <param name="value">
+        /// The value to initialize the <see cref="Base100Digit"/> structure with.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// When <paramref name="value"/> is larger than <see cref="Base100Digit.MaxValue"/>.
+        /// </exception>
+        public Base100Digit(in ulong value)
+        {
+            ThrowIfValueIsOutOfRange(in value);
+            Value = (byte)value;
         }
         
         private static void ThrowIfValueIsOutOfRange(in byte value)
         {
             if (value > MaxByteValue) ThrowValueIsOutOfRangeException(value);
         }
-
+        
+        private static void ThrowIfValueIsOutOfRange(in sbyte value)
+        {
+            if (value < MinByteValue) ThrowValueIsOutOfRangeException(value);
+            if (value > MaxByteValue) ThrowValueIsOutOfRangeException(value);
+        }
+        
+        private static void ThrowIfValueIsOutOfRange(in short value)
+        {
+            if (value < MinByteValue) ThrowValueIsOutOfRangeException(value);
+            if (value > MaxByteValue) ThrowValueIsOutOfRangeException(value);
+        }
+        
+        private static void ThrowIfValueIsOutOfRange(in ushort value)
+        {
+            if (value > MaxByteValue) ThrowValueIsOutOfRangeException(value);
+        }
+        
+        private static void ThrowIfValueIsOutOfRange(in int value)
+        {
+            if (value < MinByteValue) ThrowValueIsOutOfRangeException(value);
+            if (value > MaxByteValue) ThrowValueIsOutOfRangeException(value);
+        }
+        
+        private static void ThrowIfValueIsOutOfRange(in uint value)
+        {
+            if (value > MaxByteValue) ThrowValueIsOutOfRangeException(value);
+        }
+        
+        private static void ThrowIfValueIsOutOfRange(in nint value)
+        {
+            if (value < MinByteValue) ThrowValueIsOutOfRangeException(value);
+            if (value > MaxByteValue) ThrowValueIsOutOfRangeException(value);
+        }
+        
+        private static void ThrowIfValueIsOutOfRange(in nuint value)
+        {
+            if (value > MaxByteValue) ThrowValueIsOutOfRangeException(value);
+        }
+        
+        private static void ThrowIfValueIsOutOfRange(in long value)
+        {
+            if (value < MinByteValue) ThrowValueIsOutOfRangeException(value);
+            if (value > MaxByteValue) ThrowValueIsOutOfRangeException(value);
+        }
+        
+        private static void ThrowIfValueIsOutOfRange(in ulong value)
+        {
+            if (value > MaxByteValue) ThrowValueIsOutOfRangeException(value);
+        }
+        
         private static void ThrowValueIsOutOfRangeException(in object? value)
         {
             throw new ArgumentOutOfRangeException(
                 paramName: nameof(value), 
                 actualValue: value, 
-                message: "The value for an base100 digit has to be between 0 and 99.");
+                message: "Value was either too large or too small for an base100 digit. The value has to be between 0 and 99.");
         }
 
         /// <summary>
@@ -108,9 +309,9 @@ namespace Base100Identifier
         /// The return value is formatted with the numeric format specifier ("D2") and the 
         /// <see cref="NumberFormatInfo"/> object for the thread current culture. To define 
         /// the formatting of the <see cref="Base100Digit"/> value's string representation, 
-        /// call the <see cref="ToString"/> method. To define both the format specifiers and 
+        /// call the <see cref="ToString()"/> method. To define both the format specifiers and 
         /// culture used to create the string representation of a 
-        /// <see cref="Base100Digit"/> value, call the <see cref="ToString"/> method.
+        /// <see cref="Base100Digit"/> value, call the <see cref="ToString()"/> method.
         /// </para>
         /// <para>
         /// .NET provides extensive formatting support, which is described in greater detail 
@@ -199,7 +400,7 @@ namespace Base100Identifier
         /// </list>
         /// </para>
         /// </remarks>
-        /// <seealso cref="ToString"/>
+        /// <seealso cref="ToString()"/>
         /// <seealso cref="ToString(IFormatProvider?)"/>
         /// <seealso cref="ToString(string?, IFormatProvider?)"/>
         public string ToString(string? format) => ToString(format, DefaultFormatProvider);
@@ -263,7 +464,7 @@ namespace Base100Identifier
         /// </list>
         /// </para>
         /// </remarks>
-        /// <seealso cref="ToString"/>
+        /// <seealso cref="ToString()"/>
         /// <seealso cref="ToString(string?)"/>
         /// <seealso cref="ToString(string?, IFormatProvider?)"/>
         public string ToString(IFormatProvider? formatProvider) => ToString(DefaultNumericFormat, formatProvider);
@@ -309,7 +510,7 @@ namespace Base100Identifier
         /// <para>
         /// The <see cref="ToString(string?, IFormatProvider?)"/> method formats a <see cref="Base100Digit"/> value 
         /// in a specified format of a specified culture. To format a number by using the default ("D2") format of 
-        /// the current culture, call the <see cref="ToString"/> method. To format a number by using a specified format 
+        /// the current culture, call the <see cref="ToString()"/> method. To format a number by using a specified format 
         /// of the current culture, call the <see cref="ToString(string?)"/> method.
         /// </para>
         /// <para>
@@ -353,7 +554,7 @@ namespace Base100Identifier
         /// </list>
         /// </para>
         /// </remarks>
-        /// <seealso cref="ToString"/>
+        /// <seealso cref="ToString()"/>
         /// <seealso cref="ToString(string?)"/>
         /// <seealso cref="ToString(IFormatProvider?)"/>
         public string ToString(string? format, IFormatProvider? formatProvider) =>
@@ -393,6 +594,255 @@ namespace Base100Identifier
             else return right.HasValue;
         }
 
+        #endregion
+
+        #region Type Conversion
+
+        public static implicit operator byte(Base100Digit base100Digit) => base100Digit.Value;
+        public static implicit operator sbyte(Base100Digit base100Digit) => (sbyte)base100Digit.Value;
+        public static implicit operator short(Base100Digit base100Digit) => base100Digit.Value;
+        public static implicit operator ushort(Base100Digit base100Digit) => base100Digit.Value;
+        public static implicit operator int(Base100Digit base100Digit) => base100Digit.Value;
+        public static implicit operator uint(Base100Digit base100Digit) => base100Digit.Value;
+        public static implicit operator nint(Base100Digit base100Digit) => base100Digit.Value;
+        public static implicit operator nuint(Base100Digit base100Digit) => base100Digit.Value;
+        public static implicit operator long(Base100Digit base100Digit) => base100Digit.Value;
+        public static implicit operator ulong(Base100Digit base100Digit) => base100Digit.Value;
+        public static implicit operator float(Base100Digit base100Digit) => base100Digit.Value;
+        public static implicit operator double(Base100Digit base100Digit) => base100Digit.Value;
+        public static implicit operator decimal(Base100Digit base100Digit) => base100Digit.Value;
+
+        public static explicit operator Base100Digit(byte value)
+        {
+            try
+            {
+                return new Base100Digit(value);
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidCastException(exception.Message, exception);
+            }
+        }
+
+        public static explicit operator Base100Digit(sbyte value)
+        {
+            try
+            {
+                return new Base100Digit(value);
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidCastException(
+                    message: exception.Message, 
+                    innerException: exception);
+            }
+        }
+        public static explicit operator Base100Digit(short value)
+        {
+            try
+            {
+                return new Base100Digit(value);
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidCastException(
+                    message: exception.Message, 
+                    innerException: exception);
+            }
+        }
+        
+        public static explicit operator Base100Digit(ushort value)
+        {
+            try
+            {
+                return new Base100Digit(value);
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidCastException(
+                    message: exception.Message, 
+                    innerException: exception);
+            }
+        }
+        
+        public static explicit operator Base100Digit(int value)
+        {
+            try
+            {
+                return new Base100Digit(value);
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidCastException(
+                    message: exception.Message, 
+                    innerException: exception);
+            }
+        }
+
+        public static explicit operator Base100Digit(uint value)
+        {
+            try
+            {
+                return new Base100Digit(value);
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidCastException(
+                    message: exception.Message, 
+                    innerException: exception);
+            }
+        }
+        
+        public static explicit operator Base100Digit(nint value)
+        {
+            try
+            {
+                return new Base100Digit(value);
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidCastException(
+                    message: exception.Message, 
+                    innerException: exception);
+            }
+        }
+
+        public static explicit operator Base100Digit(nuint value)
+        {
+            try
+            {
+                return new Base100Digit(value);
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidCastException(
+                    message: exception.Message, 
+                    innerException: exception);
+            }
+        }
+
+        public static explicit operator Base100Digit(long value)
+        {
+            try
+            {
+                return new Base100Digit(value);
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidCastException(
+                    message: exception.Message, 
+                    innerException: exception);
+            }
+        }
+
+        public static explicit operator Base100Digit(ulong value)
+        {
+            try
+            {
+                return new Base100Digit(value);
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidCastException(
+                    message: exception.Message, 
+                    innerException: exception);
+            }
+        }
+
+        public static explicit operator Base100Digit(float value)
+        {
+            try
+            {
+                return new Base100Digit(Convert.ToByte(value));
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidCastException(
+                    message: exception.Message,
+                    innerException: exception);
+            }
+        }
+        
+        public static explicit operator Base100Digit(double value)
+        {
+            try
+            {
+                return new Base100Digit(Convert.ToByte(value));
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidCastException(
+                    message: exception.Message,
+                    innerException: exception);
+            }
+        }
+
+        public static explicit operator Base100Digit(decimal value)
+        {
+            try
+            {
+                return new Base100Digit(Convert.ToByte(value));
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidCastException(
+                    message: exception.Message,
+                    innerException: exception);
+            }
+        }
+         
+        /// <inheritdoc/>
+        byte IConvertible.ToByte(IFormatProvider? provider) => Value;     
+        
+        /// <inheritdoc/>
+        sbyte IConvertible.ToSByte(IFormatProvider? provider) => (sbyte)Value;
+
+        /// <inheritdoc/>
+        short IConvertible.ToInt16(IFormatProvider? provider) => Value;
+
+        /// <inheritdoc/>
+        ushort IConvertible.ToUInt16(IFormatProvider? provider) => Value;
+
+        /// <inheritdoc/>
+        int IConvertible.ToInt32(IFormatProvider? provider) => Value;
+
+        /// <inheritdoc/>
+        uint IConvertible.ToUInt32(IFormatProvider? provider) => Value;
+
+        /// <inheritdoc/>
+        long IConvertible.ToInt64(IFormatProvider? provider) => Value;
+
+        /// <inheritdoc/>
+        ulong IConvertible.ToUInt64(IFormatProvider? provider) => Value;
+        
+        /// <inheritdoc/>
+        float IConvertible.ToSingle(IFormatProvider? provider) => Value;
+        
+        /// <inheritdoc/>
+        double IConvertible.ToDouble(IFormatProvider? provider) => Value;
+
+        /// <inheritdoc/>
+        decimal IConvertible.ToDecimal(IFormatProvider? provider) => Value;
+
+        /// <inheritdoc/>
+        object IConvertible.ToType(Type conversionType, IFormatProvider? provider) =>
+            Convert.ChangeType(this, conversionType, provider);
+        
+        /// <inheritdoc/>
+        TypeCode IConvertible.GetTypeCode() => TypeCode.Object;
+        
+        /// <inheritdoc/>
+        bool IConvertible.ToBoolean(IFormatProvider? provider) =>
+            throw new InvalidCastException(ExceptionMessage_ConversionNotSupported);
+
+        /// <inheritdoc/>
+        char IConvertible.ToChar(IFormatProvider? provider) =>
+            throw new InvalidCastException(ExceptionMessage_ConversionNotSupported);
+
+        /// <inheritdoc/>
+        DateTime IConvertible.ToDateTime(IFormatProvider? provider) =>
+            throw new InvalidCastException(ExceptionMessage_ConversionNotSupported);
+        
         #endregion
     }
 }

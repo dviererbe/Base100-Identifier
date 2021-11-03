@@ -923,5 +923,317 @@ namespace Base100Identifier.UnitTests
         }
 
         #endregion
+
+        #region Type Conversion Tests
+
+        [Theory(DisplayName = "implicit operator byte(Base100Digit) SHOULD return expected value")]
+        [MemberData(nameof(AllValidBase100DigitByteValues))]
+        public void ImplicitByteConversion_SHOULD_ReturnExpectedValue(byte base100DigitValue)
+        {
+            //Arrange:
+            Base100Digit base100Digit = new Base100Digit(base100DigitValue);
+            
+            //Act:
+            byte implicitlyConvertedValue = base100Digit;
+            
+            //Assert:
+            Assert.Equal(expected: base100DigitValue, actual: implicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "implicit operator sbyte(Base100Digit) SHOULD return expected value")]
+        [MemberData(nameof(AllValidBase100DigitByteValues))]
+        public void ImplicitSByteConversion_SHOULD_ReturnExpectedValue(byte base100DigitValue)
+        {
+            //Arrange:
+            Base100Digit base100Digit = new Base100Digit(base100DigitValue);
+            
+            //Act:
+            sbyte implicitlyConvertedValue = base100Digit;
+            
+            //Assert:
+            Assert.Equal(expected: (sbyte)base100DigitValue, actual: implicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "implicit operator short(Base100Digit) SHOULD return expected value")]
+        [MemberData(nameof(AllValidBase100DigitByteValues))]
+        public void ImplicitShortConversion_SHOULD_ReturnExpectedValue(byte base100DigitValue)
+        {
+            //Arrange:
+            Base100Digit base100Digit = new Base100Digit(base100DigitValue);
+            
+            //Act:
+            short implicitlyConvertedValue = base100Digit;
+            
+            //Assert:
+            Assert.Equal(expected: base100DigitValue, actual: implicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "implicit operator ushort(Base100Digit) SHOULD return expected value")]
+        [MemberData(nameof(AllValidBase100DigitByteValues))]
+        public void ImplicitUShortConversion_SHOULD_ReturnExpectedValue(byte base100DigitValue)
+        {
+            //Arrange:
+            Base100Digit base100Digit = new Base100Digit(base100DigitValue);
+            
+            //Act:
+            ushort implicitlyConvertedValue = base100Digit;
+            
+            //Assert:
+            Assert.Equal(expected: base100DigitValue, actual: implicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "implicit operator int(Base100Digit) SHOULD return expected value")]
+        [MemberData(nameof(AllValidBase100DigitByteValues))]
+        public void ImplicitIntConversion_SHOULD_ReturnExpectedValue(byte base100DigitValue)
+        {
+            //Arrange:
+            Base100Digit base100Digit = new Base100Digit(base100DigitValue);
+            
+            //Act:
+            int implicitlyConvertedValue = base100Digit;
+            
+            //Assert:
+            Assert.Equal(expected: base100DigitValue, actual: implicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "implicit operator uint(Base100Digit) SHOULD return expected value")]
+        [MemberData(nameof(AllValidBase100DigitByteValues))]
+        public void ImplicitUIntConversion_SHOULD_ReturnExpectedValue(byte base100DigitValue)
+        {
+            //Arrange:
+            Base100Digit base100Digit = new Base100Digit(base100DigitValue);
+            
+            //Act:
+            uint implicitlyConvertedValue = base100Digit;
+            
+            //Assert:
+            Assert.Equal(expected: base100DigitValue, actual: implicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "implicit operator long(Base100Digit) SHOULD return expected value")]
+        [MemberData(nameof(AllValidBase100DigitByteValues))]
+        public void ImplicitLongConversion_SHOULD_ReturnExpectedValue(byte base100DigitValue)
+        {
+            //Arrange:
+            Base100Digit base100Digit = new Base100Digit(base100DigitValue);
+            
+            //Act:
+            long implicitlyConvertedValue = base100Digit;
+            
+            //Assert:
+            Assert.Equal(expected: base100DigitValue, actual: implicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "implicit operator ulong(Base100Digit) SHOULD return expected value")]
+        [MemberData(nameof(AllValidBase100DigitByteValues))]
+        public void ImplicitULongConversion_SHOULD_ReturnExpectedValue(byte base100DigitValue)
+        {
+            //Arrange:
+            Base100Digit base100Digit = new Base100Digit(base100DigitValue);
+            
+            //Act:
+            ulong implicitlyConvertedValue = base100Digit;
+            
+            //Assert:
+            Assert.Equal(expected: base100DigitValue, actual: implicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "implicit operator float(Base100Digit) SHOULD return expected value")]
+        [MemberData(nameof(AllValidBase100DigitByteValues))]
+        public void ImplicitFloatConversion_SHOULD_ReturnExpectedValue(byte base100DigitValue)
+        {
+            //Arrange:
+            Base100Digit base100Digit = new Base100Digit(base100DigitValue);
+            
+            //Act:
+            float implicitlyConvertedValue = base100Digit;
+            
+            //Assert:
+            Assert.Equal(expected: base100DigitValue, actual: implicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "implicit operator double(Base100Digit) SHOULD return expected value")]
+        [MemberData(nameof(AllValidBase100DigitByteValues))]
+        public void ImplicitDoubleConversion_SHOULD_ReturnExpectedValue(byte base100DigitValue)
+        {
+            //Arrange:
+            Base100Digit base100Digit = new Base100Digit(base100DigitValue);
+            
+            //Act:
+            double implicitlyConvertedValue = base100Digit;
+            
+            //Assert:
+            Assert.Equal(expected: base100DigitValue, actual: implicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "implicit operator decimal(Base100Digit) SHOULD return expected value")]
+        [MemberData(nameof(AllValidBase100DigitByteValues))]
+        public void ImplicitDecimalConversion_SHOULD_ReturnExpectedValue(byte base100DigitValue)
+        {
+            //Arrange:
+            Base100Digit base100Digit = new Base100Digit(base100DigitValue);
+            
+            //Act:
+            decimal implicitlyConvertedValue = base100Digit;
+            
+            //Assert:
+            Assert.Equal(expected: base100DigitValue, actual: implicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "explicit operator Base100Digit(byte) SHOULD return expected value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void ExplicitBase100ConversionFromByte_SHOULD_ReturnExpectedValue(Base100Digit base100Digit)
+        {
+            //Arrange:
+            byte value = base100Digit.Value;
+            
+            //Act:
+            Base100Digit explicitlyConvertedValue = (Base100Digit)value;
+            
+            //Assert:
+            Assert.Equal(expected: base100Digit, actual: explicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "explicit operator Base100Digit(sbyte) SHOULD return expected value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void ExplicitBase100ConversionFromSByte_SHOULD_ReturnExpectedValue(Base100Digit base100Digit)
+        {
+            //Arrange:
+            sbyte value = (sbyte)base100Digit.Value;
+            
+            //Act:
+            Base100Digit explicitlyConvertedValue = (Base100Digit)value;
+            
+            //Assert:
+            Assert.Equal(expected: base100Digit, actual: explicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "explicit operator Base100Digit(short) SHOULD return expected value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void ExplicitBase100ConversionFromShort_SHOULD_ReturnExpectedValue(Base100Digit base100Digit)
+        {
+            //Arrange:
+            short value = base100Digit.Value;
+            
+            //Act:
+            Base100Digit explicitlyConvertedValue = (Base100Digit)value;
+            
+            //Assert:
+            Assert.Equal(expected: base100Digit, actual: explicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "explicit operator Base100Digit(ushort) SHOULD return expected value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void ExplicitBase100ConversionFromUShort_SHOULD_ReturnExpectedValue(Base100Digit base100Digit)
+        {
+            //Arrange:
+            ushort value = base100Digit.Value;
+            
+            //Act:
+            Base100Digit explicitlyConvertedValue = (Base100Digit)value;
+            
+            //Assert:
+            Assert.Equal(expected: base100Digit, actual: explicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "explicit operator Base100Digit(int) SHOULD return expected value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void ExplicitBase100ConversionFromInt_SHOULD_ReturnExpectedValue(Base100Digit base100Digit)
+        {
+            //Arrange:
+            int value = base100Digit.Value;
+            
+            //Act:
+            Base100Digit explicitlyConvertedValue = (Base100Digit)value;
+            
+            //Assert:
+            Assert.Equal(expected: base100Digit, actual: explicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "explicit operator Base100Digit(uint) SHOULD return expected value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void ExplicitBase100ConversionFromUInt_SHOULD_ReturnExpectedValue(Base100Digit base100Digit)
+        {
+            //Arrange:
+            uint value = base100Digit.Value;
+            
+            //Act:
+            Base100Digit explicitlyConvertedValue = (Base100Digit)value;
+            
+            //Assert:
+            Assert.Equal(expected: base100Digit, actual: explicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "explicit operator Base100Digit(long) SHOULD return expected value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void ExplicitBase100ConversionFromLong_SHOULD_ReturnExpectedValue(Base100Digit base100Digit)
+        {
+            //Arrange:
+            long value = base100Digit.Value;
+            
+            //Act:
+            Base100Digit explicitlyConvertedValue = (Base100Digit)value;
+            
+            //Assert:
+            Assert.Equal(expected: base100Digit, actual: explicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "explicit operator Base100Digit(ulong) SHOULD return expected value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void explicitBase100ConversionFromULong_SHOULD_ReturnExpectedValue(Base100Digit base100Digit)
+        {
+            //Arrange:
+            ulong value = base100Digit.Value;
+            
+            //Act:
+            Base100Digit explicitlyConvertedValue = (Base100Digit)value;
+            
+            //Assert:
+            Assert.Equal(expected: base100Digit, actual: explicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "explicit operator Base100Digit(float) SHOULD return expected value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void ExplicitBase100ConversionFromFloat_SHOULD_ReturnExpectedValue(Base100Digit base100Digit)
+        {
+            //Arrange:
+            float value = base100Digit.Value;
+            
+            //Act:
+            Base100Digit explicitlyConvertedValue = (Base100Digit)value;
+            
+            //Assert:
+            Assert.Equal(expected: base100Digit, actual: explicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "explicit operator Base100Digit(double) SHOULD return expected value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void ExplicitBase100ConversionFromDouble_SHOULD_ReturnExpectedValue(Base100Digit base100Digit)
+        {
+            //Arrange:
+            double value = base100Digit.Value;
+            
+            //Act:
+            Base100Digit explicitlyConvertedValue = (Base100Digit)value;
+            
+            //Assert:
+            Assert.Equal(expected: base100Digit, actual: explicitlyConvertedValue);   
+        }
+        
+        [Theory(DisplayName = "explicit operator Base100Digit(decimal) SHOULD return expected value")]
+        [MemberData(nameof(AllBase100DigitValues))]
+        public void ExplicitBase100ConversionFromDecimal_SHOULD_ReturnExpectedValue(Base100Digit base100Digit)
+        {
+            //Arrange:
+            decimal value = base100Digit.Value;
+            
+            //Act:
+            Base100Digit explicitlyConvertedValue = (Base100Digit)value;
+            
+            //Assert:
+            Assert.Equal(expected: base100Digit, actual: explicitlyConvertedValue);   
+        }
+
+        #endregion
     }
 }
