@@ -7,12 +7,16 @@ namespace Base100Identifier
     /// <summary>
     /// Represents an base100 digit (0-99).
     /// </summary>
-    public readonly struct Base100Digit : IEquatable<Base100Digit>, IEquatable<Base100Digit?>, IFormattable, IConvertible
+    public readonly struct Base100Digit : IComparable<Base100Digit>, IComparable<Base100Digit?>, IComparable, IEquatable<Base100Digit>, IEquatable<Base100Digit?>, IFormattable, IConvertible
     {
         private const byte MinByteValue = 0;
         
         private const byte MaxByteValue = 99;
 
+        // See https://docs.microsoft.com/en-us/dotnet/api/System.IComparable.CompareTo?view=net-5.0#returns for more
+        // information about the value.
+        private const int RelativeStortOrderComparedToNull = 1;
+        
         private const string DefaultNumericFormat = "D2";
 
         private const string ExceptionMessage_ConversionNotSupported = "This conversion is not supported.";
@@ -596,6 +600,47 @@ namespace Base100Identifier
 
         #endregion
 
+        #region Relational Comparsion Implemenation
+
+        public int CompareTo(Base100Digit other) => Value.CompareTo(other.Value);
+        
+        public int CompareTo(Base100Digit? other) => 
+            other.HasValue
+            ? CompareTo(other.Value)
+            : RelativeStortOrderComparedToNull;
+
+        public int CompareTo(object? obj)
+        {
+            if (obj is null) return RelativeStortOrderComparedToNull;
+            if (obj is Base100Digit digit) return CompareTo(digit);
+
+            throw new ArgumentException(
+                paramName: nameof(obj),
+                message: $"Object must be of type {nameof(Base100Digit)}");
+        }
+        
+        public static bool operator <(Base100Digit left, Base100Digit right)
+        {
+            return left.CompareTo(right) < 0;
+        }
+
+        public static bool operator >(Base100Digit left, Base100Digit right)
+        {
+            return left.CompareTo(right) > 0;
+        }
+        
+        public static bool operator <=(Base100Digit left, Base100Digit right)
+        {
+            return left.CompareTo(right) <= 0;
+        }
+
+        public static bool operator >=(Base100Digit left, Base100Digit right)
+        {
+            return left.CompareTo(right) >= 0;
+        }
+
+        #endregion
+        
         #region Type Conversion
 
         public static implicit operator byte(Base100Digit base100Digit) => base100Digit.Value;
